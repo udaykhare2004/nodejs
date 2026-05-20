@@ -1,0 +1,176 @@
+{
+	"info": {
+		"name": "School Management APIs",
+		"description": "APIs to manage schools and retrieve them based on geographical proximity.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add School",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Local High\",\n    \"address\": \"123 Main St\",\n    \"latitude\": 40.7128,\n    \"longitude\": -74.0060\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/addSchool",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"addSchool"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Successful Addition",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Local High\",\n    \"address\": \"123 Main St\",\n    \"latitude\": 40.7128,\n    \"longitude\": -74.0060\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/addSchool",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"addSchool"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"message\": \"School added successfully\",\n    \"schoolId\": 1\n}"
+				},
+				{
+					"name": "Validation Error (Missing Name)",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"\",\n    \"address\": \"123 Main St\",\n    \"latitude\": 40.7128,\n    \"longitude\": -74.0060\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/addSchool",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"addSchool"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Valid name is required\"\n}"
+				}
+			]
+		},
+		{
+			"name": "List Schools",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/listSchools?latitude=40.730610&longitude=-73.935242",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"listSchools"
+					],
+					"query": [
+						{
+							"key": "latitude",
+							"value": "40.730610",
+							"description": "User's current latitude"
+						},
+						{
+							"key": "longitude",
+							"value": "-73.935242",
+							"description": "User's current longitude"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Successful Retrieval",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/listSchools?latitude=40.730610&longitude=-73.935242",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"listSchools"
+							],
+							"query": [
+								{
+									"key": "latitude",
+									"value": "40.730610"
+								},
+								{
+									"key": "longitude",
+									"value": "-73.935242"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"Local High\",\n        \"address\": \"123 Main St\",\n        \"latitude\": 40.7128,\n        \"longitude\": -74.006,\n        \"distance\": 6.297486411703273\n    }\n]"
+				}
+			]
+		}
+	]
+}
