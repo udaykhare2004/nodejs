@@ -18,6 +18,11 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Root route for health check / browser visit
+app.get('/', (req, res) => {
+    res.send('Welcome to the School Management API! Use /addSchool (POST) or /listSchools (GET).');
+});
+
 // Routes
 app.use('/', schoolRoutes);
 
