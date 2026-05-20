@@ -3,10 +3,16 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const pool = mysql.createPool({
+const dbConfig = {
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD || '',
+    port: process.env.DB_PORT || 3306,
+    ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : undefined
+};
+
+const pool = mysql.createPool({
+    ...dbConfig,
     database: process.env.DB_NAME || 'backend',
     waitForConnections: true,
     connectionLimit: 10,
@@ -17,11 +23,7 @@ const initializeDatabase = async () => {
     try {
         const dbName = process.env.DB_NAME || 'backend';
         // Create database if it doesn't exist using a separate connection
-        const connection = await mysql.createConnection({
-            host: process.env.DB_HOST || 'localhost',
-            user: process.env.DB_USER || 'root',
-            password: process.env.DB_PASSWORD || ''
-        });
+        const connection = await mysql.createConnection(dbConfig);
         await connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``);
         await connection.end();
         
